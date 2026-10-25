@@ -19,6 +19,8 @@ RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/proxy .
 # reasonable follow-up once this is more than a getting-started reference
 # image, not a requirement for it to be a real, working one now.
 FROM alpine:3.20
+# GHCR links the package to the repository named here.
+LABEL org.opencontainers.image.source="https://github.com/RinwallDev/rinwall"
 RUN apk add --no-cache ca-certificates
 COPY --from=build /out/proxy /usr/local/bin/proxy
 WORKDIR /app
