@@ -1,0 +1,1083 @@
+{
+  "seed": 20261021,
+  "quotas": {
+    "C": "20",
+    "A": "20",
+    "B": "20",
+    "unknown": "15"
+  },
+  "reviewed_by": "maintainers, 2026-10-21, against each tool's author-written description",
+  "note": "Servers and tool descriptions are withheld on purpose; re-run the pipeline to reproduce the sample. id is the first 12 hex digits of sha1(seed:server:tool).",
+  "items": [
+    {
+      "id": "020b551f5a26",
+      "class": "C",
+      "tool": "qy_publish",
+      "confidence": 0.85,
+      "rationale": "verb \"publish\" publishes externally",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"publish\" publishes externally"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "publishes a task others act on"
+    },
+    {
+      "id": "021cc1c4bb27",
+      "class": "C",
+      "tool": "caliper_evals_delete",
+      "confidence": 0.85,
+      "rationale": "verb \"delete\" deletes data",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"delete\" deletes data"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "02ae8f0ac44d",
+      "class": "C",
+      "tool": "submit_enquiry",
+      "confidence": 0.85,
+      "rationale": "verb \"submit\" submits to an external system",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"submit\" submits to an external system"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "sends to a third party"
+    },
+    {
+      "id": "0312a6fbee84",
+      "class": "C",
+      "tool": "capability_version_publish",
+      "confidence": 0.85,
+      "rationale": "verb \"publish\" publishes externally",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"publish\" publishes externally"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "publishes; callers notified"
+    },
+    {
+      "id": "04296dd5b8e3",
+      "class": "C",
+      "tool": "how_to_call_finch_agents",
+      "confidence": 0.85,
+      "rationale": "verb \"call\" places a call",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"call\" places a call"
+        }
+      ],
+      "human_verdict": "over",
+      "human_note": "a how-to guide (B); no verb in front"
+    },
+    {
+      "id": "04ae4c0e6109",
+      "class": "C",
+      "tool": "delete_deployment",
+      "confidence": 0.95,
+      "rationale": "the tool's own description describes an irreversible action",
+      "signals": [
+        {
+          "rule": "description-phrase",
+          "detail": "description says \"cannot be undone\""
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "author says the only way kept data is deleted"
+    },
+    {
+      "id": "06d5d1963cbe",
+      "class": "C",
+      "tool": "send_review_router_test",
+      "confidence": 0.85,
+      "rationale": "verb \"send\" sends an outbound message",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"send\" sends an outbound message"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "sends a real Slack message"
+    },
+    {
+      "id": "0721dac69964",
+      "class": "C",
+      "tool": "apex_run_agent_release_readiness_gate",
+      "confidence": 0.85,
+      "rationale": "verb \"release\" releases",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"release\" releases"
+        }
+      ],
+      "human_verdict": "over",
+      "human_note": "aggregates declarations (B); 'release' is the noun"
+    },
+    {
+      "id": "07600564c064",
+      "class": "C",
+      "tool": "post",
+      "confidence": 0.85,
+      "rationale": "verb \"post\" posts externally",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"post\" posts externally"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "08a82e2f0ce0",
+      "class": "C",
+      "tool": "runcloud_deploy_git",
+      "confidence": 0.85,
+      "rationale": "verb \"deploy\" deploys",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"deploy\" deploys"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "changes the live site"
+    },
+    {
+      "id": "08c80f87a7a7",
+      "class": "C",
+      "tool": "send_fax",
+      "confidence": 0.85,
+      "rationale": "verb \"send\" sends an outbound message",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"send\" sends an outbound message"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "transmits a fax"
+    },
+    {
+      "id": "0959a9df356f",
+      "class": "C",
+      "tool": "update_sender_email_warmup",
+      "confidence": 0.7,
+      "rationale": "verb \"update\" would be compensable, but it touches outbound messaging",
+      "signals": [
+        {
+          "rule": "noun-position",
+          "detail": "\"email\" after the verb \"update\" is the object, not an action"
+        },
+        {
+          "rule": "leading-verb",
+          "detail": "\"update\" mutates state with a natural inverse"
+        },
+        {
+          "rule": "noun",
+          "detail": "\"email\" touches outbound messaging"
+        }
+      ],
+      "human_verdict": "over",
+      "human_note": "warm-up settings (A); 'email' noun escalated it"
+    },
+    {
+      "id": "0970a295afc4",
+      "class": "C",
+      "tool": "update_webhook_endpoint",
+      "confidence": 0.7,
+      "rationale": "verb \"update\" would be compensable, but it triggers external systems",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"update\" mutates state with a natural inverse"
+        },
+        {
+          "rule": "noun",
+          "detail": "\"webhook\" triggers external systems"
+        }
+      ],
+      "human_verdict": "over",
+      "human_note": "compensable config change (A); webhook noun escalated it"
+    },
+    {
+      "id": "097dc94244f5",
+      "class": "C",
+      "tool": "send_reply_draft",
+      "confidence": 0.85,
+      "rationale": "verb \"send\" sends an outbound message",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"send\" sends an outbound message"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "cannot be recalled"
+    },
+    {
+      "id": "0a967056e6b8",
+      "class": "C",
+      "tool": "runcloud_force_deploy_atomic",
+      "confidence": 0.85,
+      "rationale": "verb \"deploy\" deploys",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"deploy\" deploys"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "0b12d0fa7f20",
+      "class": "C",
+      "tool": "delete_boat_image",
+      "confidence": 0.85,
+      "rationale": "verb \"delete\" deletes data",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"delete\" deletes data"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "deleted for good"
+    },
+    {
+      "id": "0b94858eabf8",
+      "class": "C",
+      "tool": "submit_urls",
+      "confidence": 0.85,
+      "rationale": "verb \"submit\" submits to an external system",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"submit\" submits to an external system"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "notifies search engines"
+    },
+    {
+      "id": "0b985fda6a0e",
+      "class": "C",
+      "tool": "wallet_transfer",
+      "confidence": 0.85,
+      "rationale": "verb \"transfer\" moves money",
+      "signals": [
+        {
+          "rule": "verb",
+          "detail": "\"transfer\" moves money"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "moves money"
+    },
+    {
+      "id": "0bc06259a08e",
+      "class": "C",
+      "tool": "delete_qdrant",
+      "confidence": 0.95,
+      "rationale": "the tool's own description describes an irreversible action",
+      "signals": [
+        {
+          "rule": "description-phrase",
+          "detail": "description says \"cannot be undone\""
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "0cd161a08b74",
+      "class": "C",
+      "tool": "deployments_delete",
+      "confidence": 0.95,
+      "rationale": "the tool's own description describes an irreversible action",
+      "signals": [
+        {
+          "rule": "description-phrase",
+          "detail": "description says \"permanently\""
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "002b406d94a0",
+      "class": "A",
+      "tool": "create_booking",
+      "confidence": 0.8,
+      "rationale": "verb \"create\" creates a record that can be removed",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"create\" creates a record that can be removed"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "a real appointment, but cancellable"
+    },
+    {
+      "id": "005e83f348d7",
+      "class": "A",
+      "tool": "set_primary_icp",
+      "confidence": 0.8,
+      "rationale": "verb \"set\" mutates state with a natural inverse",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"set\" mutates state with a natural inverse"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "009923f7b9ad",
+      "class": "A",
+      "tool": "update_boat",
+      "confidence": 0.8,
+      "rationale": "verb \"update\" mutates state with a natural inverse",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"update\" mutates state with a natural inverse"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "014c5aa83e08",
+      "class": "A",
+      "tool": "update_profile",
+      "confidence": 0.8,
+      "rationale": "verb \"update\" mutates state with a natural inverse",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"update\" mutates state with a natural inverse"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "017462f9dba3",
+      "class": "A",
+      "tool": "update_session",
+      "confidence": 0.8,
+      "rationale": "verb \"update\" mutates state with a natural inverse",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"update\" mutates state with a natural inverse"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "025930465aee",
+      "class": "A",
+      "tool": "workiz_unassign_lead",
+      "confidence": 0.8,
+      "rationale": "verb \"unassign\" mutates state with a natural inverse",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"unassign\" mutates state with a natural inverse"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "author says reversible"
+    },
+    {
+      "id": "02fa9d43477f",
+      "class": "A",
+      "tool": "caliper_rubrics_create",
+      "confidence": 0.5,
+      "rationale": "verb \"create\" appears outside the leading position - creates a record that can be removed",
+      "signals": [
+        {
+          "rule": "trailing-verb",
+          "detail": "\"create\" creates a record that can be removed"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "03b5870fe339",
+      "class": "A",
+      "tool": "create-room-tool",
+      "confidence": 0.8,
+      "rationale": "verb \"create\" creates a record that can be removed",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"create\" creates a record that can be removed"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "040f8a9780aa",
+      "class": "A",
+      "tool": "factreason_create_topup_link",
+      "confidence": 0.8,
+      "rationale": "verb \"create\" creates a record that can be removed",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"create\" creates a record that can be removed"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "checkout link, no charge"
+    },
+    {
+      "id": "042e0ff7d4bb",
+      "class": "A",
+      "tool": "update_knowledge_base",
+      "confidence": 0.8,
+      "rationale": "verb \"update\" mutates state with a natural inverse",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"update\" mutates state with a natural inverse"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "042f3735115a",
+      "class": "A",
+      "tool": "jobs.offer.add_negotiation",
+      "confidence": 0.5,
+      "rationale": "verb \"add\" appears outside the leading position - creates a record that can be removed",
+      "signals": [
+        {
+          "rule": "trailing-verb",
+          "detail": "\"add\" creates a record that can be removed"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "append-only log"
+    },
+    {
+      "id": "05d9df2708ad",
+      "class": "A",
+      "tool": "create_share",
+      "confidence": 0.8,
+      "rationale": "verb \"create\" creates a record that can be removed",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"create\" creates a record that can be removed"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "07072de3d5e5",
+      "class": "A",
+      "tool": "create_social_post_draft",
+      "confidence": 0.8,
+      "rationale": "verb \"create\" creates a record that can be removed",
+      "signals": [
+        {
+          "rule": "noun-position",
+          "detail": "\"post\" after the verb \"create\" is the object, not an action"
+        },
+        {
+          "rule": "leading-verb",
+          "detail": "\"create\" creates a record that can be removed"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "moved out of C by the fix"
+    },
+    {
+      "id": "0821f381b10a",
+      "class": "A",
+      "tool": "create_mandate",
+      "confidence": 0.8,
+      "rationale": "verb \"create\" creates a record that can be removed",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"create\" creates a record that can be removed"
+        }
+      ],
+      "human_verdict": "under",
+      "human_note": "a standing financial mandate can trigger trades (C)"
+    },
+    {
+      "id": "09088218dd58",
+      "class": "A",
+      "tool": "set_pwa_branding",
+      "confidence": 0.8,
+      "rationale": "verb \"set\" mutates state with a natural inverse",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"set\" mutates state with a natural inverse"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "0955cf50ef8f",
+      "class": "A",
+      "tool": "create_knowledge_base",
+      "confidence": 0.8,
+      "rationale": "verb \"create\" creates a record that can be removed",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"create\" creates a record that can be removed"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "09efebf1c338",
+      "class": "A",
+      "tool": "multibanco_create_reference",
+      "confidence": 0.8,
+      "rationale": "verb \"create\" creates a record that can be removed",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"create\" creates a record that can be removed"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "payment reference, no money moves until paid"
+    },
+    {
+      "id": "0a9a6051e042",
+      "class": "A",
+      "tool": "create_alert",
+      "confidence": 0.8,
+      "rationale": "verb \"create\" creates a record that can be removed",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"create\" creates a record that can be removed"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "0aa6ab678b11",
+      "class": "A",
+      "tool": "requester_notifications_set",
+      "confidence": 0.5,
+      "rationale": "verb \"set\" appears outside the leading position - mutates state with a natural inverse",
+      "signals": [
+        {
+          "rule": "trailing-verb",
+          "detail": "\"set\" mutates state with a natural inverse"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "0aaec6fda0c9",
+      "class": "A",
+      "tool": "online_teacher_profiles_set",
+      "confidence": 0.5,
+      "rationale": "verb \"set\" appears outside the leading position - mutates state with a natural inverse",
+      "signals": [
+        {
+          "rule": "trailing-verb",
+          "detail": "\"set\" mutates state with a natural inverse"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "draft only"
+    },
+    {
+      "id": "00101d9bf7f2",
+      "class": "B",
+      "tool": "sec_full_text_search",
+      "confidence": 0.5,
+      "rationale": "verb \"search\" appears outside the leading position - reads",
+      "signals": [
+        {
+          "rule": "trailing-verb",
+          "detail": "\"search\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "0016033c2daf",
+      "class": "B",
+      "tool": "provider_check_status",
+      "confidence": 0.9,
+      "rationale": "leading verb \"check\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"check\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "00361c44089b",
+      "class": "B",
+      "tool": "persona.get",
+      "confidence": 0.9,
+      "rationale": "leading verb \"get\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"get\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "0038c0dcf43b",
+      "class": "B",
+      "tool": "list_price_alerts",
+      "confidence": 0.9,
+      "rationale": "leading verb \"list\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"list\" reads"
+        },
+        {
+          "rule": "noun",
+          "detail": "\"price\" touches pricing (sensitive to read, but still a read)"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "003efecde713",
+      "class": "B",
+      "tool": "sec_alert_subscription_status",
+      "confidence": 0.5,
+      "rationale": "verb \"status\" appears outside the leading position - reads",
+      "signals": [
+        {
+          "rule": "trailing-verb",
+          "detail": "\"status\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "008b20843677",
+      "class": "B",
+      "tool": "list_heartbeats",
+      "confidence": 0.9,
+      "rationale": "leading verb \"list\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"list\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "00aba8f1a512",
+      "class": "B",
+      "tool": "search_countries",
+      "confidence": 0.9,
+      "rationale": "leading verb \"search\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"search\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "00b17368ee38",
+      "class": "B",
+      "tool": "list_domains",
+      "confidence": 0.9,
+      "rationale": "leading verb \"list\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"list\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "00fc76abaf9e",
+      "class": "B",
+      "tool": "get_alerts",
+      "confidence": 0.9,
+      "rationale": "leading verb \"get\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"get\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "paid read (x402)"
+    },
+    {
+      "id": "00fefda2b0d8",
+      "class": "B",
+      "tool": "trust_check",
+      "confidence": 0.9,
+      "rationale": "leading verb \"check\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"check\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "paid read (x402)"
+    },
+    {
+      "id": "01356224b71c",
+      "class": "B",
+      "tool": "get_power_passport_link",
+      "confidence": 0.9,
+      "rationale": "leading verb \"get\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"get\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "014671b84ed4",
+      "class": "B",
+      "tool": "chinaapi_get_recipe",
+      "confidence": 0.9,
+      "rationale": "leading verb \"get\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"get\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "01487181fd2a",
+      "class": "B",
+      "tool": "codat_list_bills",
+      "confidence": 0.9,
+      "rationale": "leading verb \"list\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"list\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "017018619a4a",
+      "class": "B",
+      "tool": "get_power_service_quote",
+      "confidence": 0.9,
+      "rationale": "leading verb \"get\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"get\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "01856c5f69b6",
+      "class": "B",
+      "tool": "get_application_deadlines",
+      "confidence": 0.9,
+      "rationale": "leading verb \"get\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"get\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "019bb73fa5a6",
+      "class": "B",
+      "tool": "search_dealings",
+      "confidence": 0.9,
+      "rationale": "leading verb \"search\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"search\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "01d4229a5e09",
+      "class": "B",
+      "tool": "get_series",
+      "confidence": 0.9,
+      "rationale": "leading verb \"get\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"get\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": "paid read (x402)"
+    },
+    {
+      "id": "01ee7803743b",
+      "class": "B",
+      "tool": "search_team_posts",
+      "confidence": 0.9,
+      "rationale": "leading verb \"search\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"search\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "01ff86d37dd4",
+      "class": "B",
+      "tool": "token_risk_check",
+      "confidence": 0.5,
+      "rationale": "verb \"check\" appears outside the leading position - reads",
+      "signals": [
+        {
+          "rule": "trailing-verb",
+          "detail": "\"check\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "0205b3e31090",
+      "class": "B",
+      "tool": "describe_service",
+      "confidence": 0.9,
+      "rationale": "leading verb \"describe\" reads",
+      "signals": [
+        {
+          "rule": "leading-verb",
+          "detail": "\"describe\" reads"
+        }
+      ],
+      "human_verdict": "correct",
+      "human_note": ""
+    },
+    {
+      "id": "002a11a7aba3",
+      "class": "unknown",
+      "tool": "notarize",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "A",
+      "human_note": "writes an attested receipt"
+    },
+    {
+      "id": "0050234dc9c6",
+      "class": "unknown",
+      "tool": "sub_processors_register",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "B",
+      "human_note": "stateless lookup"
+    },
+    {
+      "id": "00649c6bb28c",
+      "class": "unknown",
+      "tool": "recommendations.block",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "A",
+      "human_note": "block, unblockable"
+    },
+    {
+      "id": "006d18b5392e",
+      "class": "unknown",
+      "tool": "payer_follow_up_request",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "C",
+      "human_note": "starts automated outreach to payers"
+    },
+    {
+      "id": "009dd3c60f50",
+      "class": "unknown",
+      "tool": "gripforge_game_theme_from_concept",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "A",
+      "human_note": "generates and saves a theme"
+    },
+    {
+      "id": "011962148315",
+      "class": "unknown",
+      "tool": "india_regulators_directory",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "B",
+      "human_note": "static directory"
+    },
+    {
+      "id": "011d67dba174",
+      "class": "unknown",
+      "tool": "setup_agent_session",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "A",
+      "human_note": "creates a VM, destroyable"
+    },
+    {
+      "id": "0166f957798d",
+      "class": "unknown",
+      "tool": "gripforge_shield_vfx",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "A",
+      "human_note": "creates an asset"
+    },
+    {
+      "id": "016743ca2d93",
+      "class": "unknown",
+      "tool": "place_order",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "C",
+      "human_note": "opens a position with real funds"
+    },
+    {
+      "id": "018f50513964",
+      "class": "unknown",
+      "tool": "nftOwner",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "B",
+      "human_note": "read"
+    },
+    {
+      "id": "0191c7feaf29",
+      "class": "unknown",
+      "tool": "pack_docs",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "B",
+      "human_note": "crawl and read"
+    },
+    {
+      "id": "019397371d01",
+      "class": "unknown",
+      "tool": "sanctions_screen",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "B",
+      "human_note": "screening read"
+    },
+    {
+      "id": "01b886aa14f5",
+      "class": "unknown",
+      "tool": "runcloud_renew_ssl",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "A",
+      "human_note": "re-issues a certificate"
+    },
+    {
+      "id": "024f098cfae0",
+      "class": "unknown",
+      "tool": "replay_webhook_delivery",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "C",
+      "human_note": "re-sends a webhook delivery"
+    },
+    {
+      "id": "026aa6750fee",
+      "class": "unknown",
+      "tool": "free_tiers",
+      "confidence": 0,
+      "rationale": "no recognized verb, method, or description signal - classify this one by hand",
+      "signals": [],
+      "human_verdict": "B",
+      "human_note": "paid read"
+    }
+  ]
+}

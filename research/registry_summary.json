@@ -1,0 +1,12 @@
+{
+  "fetched_at": "2026-10-22T03:47:16.055627+00:00",
+  "registry": "https://registry.modelcontextprotocol.io/v0/servers",
+  "listed_latest_versions": 48003,
+  "active": 47389,
+  "streamable_http_endpoints": 30767,
+  "distinct_hosts": 22356,
+  "after_per_host_cap": 23259,
+  "per_host_cap": 3,
+  "sampled": 800,
+  "seed": 20260909
+}

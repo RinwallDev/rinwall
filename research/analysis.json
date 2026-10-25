@@ -1,0 +1,196 @@
+{
+  "targets": 800,
+  "largest_catalog": {
+    "tools": 223,
+    "by_class": {
+      "A": 13,
+      "B": 34,
+      "C": 5,
+      "unknown": 171
+    }
+  },
+  "by_class_excluding_largest": {
+    "A": {
+      "n": 342,
+      "pct": 6.9
+    },
+    "B": {
+      "n": 2676,
+      "pct": 54.3
+    },
+    "C": {
+      "n": 273,
+      "pct": 5.5
+    },
+    "unknown": {
+      "n": 1640,
+      "pct": 33.3
+    }
+  },
+  "outcomes": {
+    "auth_required": {
+      "n": 276,
+      "pct": 34.5
+    },
+    "ok": {
+      "n": 439,
+      "pct": 54.9
+    },
+    "protocol_error": {
+      "n": 58,
+      "pct": 7.2
+    },
+    "unreachable": {
+      "n": 27,
+      "pct": 3.4
+    }
+  },
+  "servers_with_catalog": 439,
+  "distinct_hosts_with_catalog": 439,
+  "tools": 5154,
+  "by_class": {
+    "A": {
+      "n": 355,
+      "pct": 6.9,
+      "ci95": [
+        6.2,
+        7.6
+      ]
+    },
+    "B": {
+      "n": 2710,
+      "pct": 52.6,
+      "ci95": [
+        51.2,
+        53.9
+      ]
+    },
+    "C": {
+      "n": 278,
+      "pct": 5.4,
+      "ci95": [
+        4.8,
+        6.0
+      ]
+    },
+    "unknown": {
+      "n": 1811,
+      "pct": 35.1,
+      "ci95": [
+        33.8,
+        36.5
+      ]
+    }
+  },
+  "median_tools_per_server": 6,
+  "max_tools_per_server": 223,
+  "servers_any_c": {
+    "n": 127,
+    "pct": 28.9,
+    "ci95": [
+      24.9,
+      33.3
+    ]
+  },
+  "servers_all_b": {
+    "n": 113,
+    "pct": 25.7,
+    "ci95": [
+      21.9,
+      30.0
+    ]
+  },
+  "servers_read_and_c": {
+    "n": 121,
+    "pct": 27.6,
+    "ci95": [
+      23.6,
+      31.9
+    ]
+  },
+  "servers_three_plus_c": 29,
+  "servers_by_c_count": {
+    "0": 312,
+    "1": 72,
+    "2": 26,
+    "3+": 29
+  },
+  "top_decile_servers": 44,
+  "top_decile_share_of_c_pct": 66.2,
+  "c_flagged_by_description": 39,
+  "description_coverage": {
+    "with": 5154,
+    "of": 5154,
+    "pct": 100.0
+  },
+  "baseline": {
+    "label": "September 2026",
+    "registry_active": 29724,
+    "registry_streamable_http": 17032,
+    "registry_hosts": 11835,
+    "targets": 800,
+    "outcomes": {
+      "ok": 421,
+      "auth_required": 257,
+      "protocol_error": 66,
+      "unreachable": 55
+    },
+    "tools": 4746,
+    "by_class": {
+      "C": 300,
+      "A": 371,
+      "B": 2547,
+      "unknown": 1528
+    },
+    "servers_any_c_pct": 32.5,
+    "servers_all_b_pct": 23.8,
+    "servers_read_and_c_pct": 30.9,
+    "top_decile_share_of_c_pct": 66.0,
+    "servers_three_plus_c": 30,
+    "c_flagged_by_description": 38,
+    "description_coverage_pct": 99.9,
+    "median_tools": 6,
+    "max_tools": 133
+  },
+  "registry_funnel": {
+    "fetched_at": "2026-10-22T03:47:16.055627+00:00",
+    "registry": "https://registry.modelcontextprotocol.io/v0/servers",
+    "listed_latest_versions": 48003,
+    "active": 47389,
+    "streamable_http_endpoints": 30767,
+    "distinct_hosts": 22356,
+    "after_per_host_cap": 23259,
+    "per_host_cap": 3,
+    "sampled": 800,
+    "seed": 20260909
+  },
+  "sampled_at": "2026-10-22T03:47:16.055627+00:00",
+  "validation": {
+    "C": {
+      "reviewed": 20,
+      "correct": 16,
+      "over": 4,
+      "under": 0,
+      "precision_pct": 80.0
+    },
+    "A": {
+      "reviewed": 20,
+      "correct": 19,
+      "over": 0,
+      "under": 1,
+      "precision_pct": 95.0
+    },
+    "B": {
+      "reviewed": 20,
+      "correct": 20,
+      "over": 0,
+      "under": 0,
+      "precision_pct": 100.0
+    },
+    "unknown_is_really": {
+      "A": 6,
+      "B": 6,
+      "C": 3
+    }
+  }
+}

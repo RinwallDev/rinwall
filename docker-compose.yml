@@ -1,0 +1,84 @@
+# A realistic self-hosted reference stack: real Vault, real JWT
+# verification, real policy bundle, real biscuit tokens - the "take it to
+# prod" experience, run with one command instead of five manual terminal
+# steps. Not a hardened production deployment (see config/config.docker.yaml
+# and cmd/rinwall/Dockerfile's own comments for exactly what's simplified and
+# why) - it's what a serious local/self-hosted evaluation looks like.
+#
+#   docker compose up --build
+#   go run ./cmd/devtoken --user alex@example.com --role support   # mint a JWT
+#   curl -X POST localhost:8080/tool-call -H "Authorization: Bearer $(...)" ...
+#
+# Vault's dev-mode storage is in-memory: `docker compose down` (without -v)
+# keeps the proxy's own audit log/SQLite state in the `proxy-data` volume,
+# but Vault itself - and the biscuit signing keyring inside it - resets on
+# every restart. The proxy bootstraps a fresh keyring automatically when it
+# finds none, so a restart needs no manual key setup.
+
+services:
+  vault:
+    image: hashicorp/vault:1.17.2
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: dev-root-token
+      VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
+      # Only for the HEALTHCHECK's own `vault status` call inside this
+      # container - other services reach Vault at http://vault:8200.
+      VAULT_ADDR: http://127.0.0.1:8200
+    ports:
+      - "8200:8200"
+    cap_add:
+      - IPC_LOCK
+    healthcheck:
+      test: ["CMD", "vault", "status"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  vault-init:
+    image: hashicorp/vault:1.17.2
+    depends_on:
+      vault:
+        condition: service_healthy
+    environment:
+      VAULT_ADDR: http://vault:8200
+      VAULT_TOKEN: dev-root-token
+    entrypoint: ["sh", "/vault-init.sh"]
+    volumes:
+      - ./scripts/vault-init.sh:/vault-init.sh:ro
+
+  proxy:
+    build:
+      context: .
+      dockerfile: cmd/rinwall/Dockerfile
+    depends_on:
+      vault-init:
+        condition: service_completed_successfully
+    ports:
+      - "8080:8080"
+    # Optional: enables both model-based judges (internal/provenance,
+    # internal/visualprovenance) if set on the host - passed through, never
+    # baked into the image or config file. Neither judge runs without it;
+    # everything else in this stack works the same either way.
+    environment:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    volumes:
+      - ./config:/app/config:ro
+      - ./policies:/app/policies:ro
+      - ./examples:/app/examples:ro
+      - proxy-data:/data
+
+  mockupstream:
+    build:
+      context: .
+      dockerfile: cmd/mockupstream/Dockerfile
+    depends_on:
+      proxy:
+        condition: service_healthy
+    environment:
+      JIT_PROXY_URL: http://proxy:8080
+    ports:
+      - "8000:8000"
+
+volumes:
+  proxy-data:

@@ -1,0 +1,56 @@
+port: "8080"
+upstream_url: "http://127.0.0.1:8000"
+policy_path: "policies/tool_policy.rego"
+tools_path: "examples/tools.yaml"
+jwt_secret: "dev-jwt-secret-change-me"
+audit_log_path: "audit.log"
+db_path: "rinwall.db"
+
+# Fast Capability Plane + key rotation. vault_* points at a
+# local `vault server -dev` instance. Its Transit engine sources a fresh
+# random session seed once per agent session (see
+# internal/capability/vault.go). Its KV v2 engine (the dev server's
+# default `secret/` mount) is where the biscuit signing keyring itself now
+# lives - not in this file - so the private key material never sits in
+# plaintext config; see internal/capability/keyring.go. Verifiers
+# (cmd/mockupstream, or a real upstream service) fetch the current public
+# key(s) from the proxy's own GET /biscuit-keys rather than being
+# configured with a static value, so a rotation
+# (POST /admin/biscuit-keys/rotate, role admin) doesn't require a
+# synchronized manual update anywhere.
+vault_addr: "http://127.0.0.1:8200"
+vault_token: "dev-root-token"
+vault_transit_key: "jit-session-root"
+# vault_kv_mount / vault_keyring_path both default to "secret" /
+# "jit/biscuit-keyring" if omitted - listed here for visibility, not
+# because they need to be changed for local dev.
+vault_kv_mount: "secret"
+vault_keyring_path: "jit/biscuit-keyring"
+
+# Real Vault database dynamic-secrets path (internal/handler/dbquery.go),
+# verified against a real Postgres instance. This is the connection
+# template only (no credentials - those are minted per-session by Vault's
+# database secrets engine); see the "Real DB/AWS dynamic secrets" section
+# of docs/REFERENCE.md for the full setup (Docker Postgres, Vault
+# database engine config, the readonly-orders role).
+db_dsn_template: "postgres://%s:%s@127.0.0.1:5433/jitdemo?sslmode=disable"
+
+# Real Vault AWS dynamic-secrets path (internal/handler/awsquery.go) -
+# credentials are minted fresh per call via a real sts:AssumeRole, never
+# stored here. See the "Real DB/AWS dynamic secrets" section of
+# docs/REFERENCE.md for the full setup (a narrow IAM user/role, Vault's aws secrets engine).
+aws_region: "us-west-2"
+
+# MCP-to-MCP passthrough (internal/handler/mcpcall.go): mcp-backed tools
+# (mcp_tool set in the catalog) are forwarded onward to this MCP server as
+# real tools/call requests. Points at cmd/mockupstream's own MCP endpoint
+# for local dev; in a real deployment this is whatever MCP server the org
+# already runs, and this proxy sits in front of it.
+#
+# mcp_upstream_auth_env would name an ENVIRONMENT VARIABLE holding that
+# server's Authorization header value - never the value itself. Omitted
+# here because the local mock needs no credential. That credential living
+# in the proxy rather than the agent is the point: the agent can be talked
+# into asking for a bad call, but it can never leak a credential it was
+# never given.
+mcp_upstream_url: "http://127.0.0.1:8000/mcp"

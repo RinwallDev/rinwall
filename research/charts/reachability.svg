@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 266" width="720" height="266" role="img" aria-label="Reachability of 800 sampled MCP servers" font-family="'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif">
+<title>Reachability of 800 sampled MCP servers</title>
+<rect width="720" height="266" fill="#fcfcfb"/>
+<text x="24.0" y="30.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="600">What 800 sampled servers did when asked for their tool list</text>
+<text x="24.0" y="50.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal">initialize, then tools/list; nothing was called</text>
+<text x="202.0" y="86.0" font-size="13" fill="#0b0b0b" text-anchor="end" font-weight="normal">Catalog retrieved</text>
+<g><title>Catalog retrieved: 439 of 800 (54.9%)</title>
+<path d="M214.0,70.0 H582.0 a4,4 0 0 1 4,4 V88.0 a4,4 0 0 1 -4,4 H214.0 Z" fill="#2a78d6"/>
+</g>
+<text x="596.0" y="86.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="normal" font-family="'IBM Plex Mono', Consolas, monospace">439</text>
+<text x="632.0" y="86.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-family="'IBM Plex Mono', Consolas, monospace">54.9%</text>
+<text x="202.0" y="130.0" font-size="13" fill="#0b0b0b" text-anchor="end" font-weight="normal">Authentication required</text>
+<g><title>Authentication required: 276 of 800 (34.5%)</title>
+<path d="M214.0,114.0 H443.9 a4,4 0 0 1 4,4 V132.0 a4,4 0 0 1 -4,4 H214.0 Z" fill="#2a78d6"/>
+</g>
+<text x="457.9" y="130.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="normal" font-family="'IBM Plex Mono', Consolas, monospace">276</text>
+<text x="493.9" y="130.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-family="'IBM Plex Mono', Consolas, monospace">34.5%</text>
+<text x="202.0" y="174.0" font-size="13" fill="#0b0b0b" text-anchor="end" font-weight="normal">Protocol error</text>
+<g><title>Protocol error: 58 of 800 (7.2%)</title>
+<path d="M214.0,158.0 H259.1 a4,4 0 0 1 4,4 V176.0 a4,4 0 0 1 -4,4 H214.0 Z" fill="#2a78d6"/>
+</g>
+<text x="273.1" y="174.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="normal" font-family="'IBM Plex Mono', Consolas, monospace">58</text>
+<text x="309.1" y="174.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-family="'IBM Plex Mono', Consolas, monospace">7.2%</text>
+<text x="202.0" y="218.0" font-size="13" fill="#0b0b0b" text-anchor="end" font-weight="normal">Unreachable</text>
+<g><title>Unreachable: 27 of 800 (3.4%)</title>
+<path d="M214.0,202.0 H232.9 a4,4 0 0 1 4,4 V220.0 a4,4 0 0 1 -4,4 H214.0 Z" fill="#2a78d6"/>
+</g>
+<text x="246.9" y="218.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="normal" font-family="'IBM Plex Mono', Consolas, monospace">27</text>
+<text x="282.9" y="218.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-family="'IBM Plex Mono', Consolas, monospace">3.4%</text>
+</svg>

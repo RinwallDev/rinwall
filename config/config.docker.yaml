@@ -1,0 +1,36 @@
+# The docker-compose.yml reference stack's config - the same shape as
+# config/config.yaml, with every address pointed at the other services'
+# container names instead of 127.0.0.1, since containers on a compose
+# network reach each other by service name, not localhost.
+#
+# This is a GETTING-STARTED reference stack, not a hardened production
+# deployment: jwt_secret is the same well-known local default
+# config/config.yaml and cmd/devtoken already use, and Vault runs in `-dev`
+# mode (in-memory, auto-unsealed, one root token) via docker-compose.yml's
+# vault-init service. Real production use needs a real secret here and a
+# real HA Vault - PRODUCTION.md covers both; running Vault highly available
+# is an infrastructure decision this project documents rather than
+# automates.
+port: "8080"
+upstream_url: "http://mockupstream:8000"
+policy_path: "policies/tool_policy.rego"
+tools_path: "examples/tools.yaml"
+jwt_secret: "dev-jwt-secret-change-me"
+audit_log_path: "/data/audit.log"
+db_path: "/data/rinwall.db"
+
+vault_addr: "http://vault:8200"
+vault_token: "dev-root-token"
+vault_transit_key: "jit-session-root"
+vault_kv_mount: "secret"
+vault_keyring_path: "jit/biscuit-keyring"
+
+# MCP-to-MCP passthrough, pointed at mockupstream's own MCP endpoint - see
+# cmd/mockupstream/mcpserver.go and examples/tools.yaml's mcp_* tools.
+mcp_upstream_url: "http://mockupstream:8000/mcp"
+
+# db_dsn_template / aws_region are deliberately omitted: this reference
+# stack doesn't run a Postgres or have an AWS account to point at, and both
+# are optional (a tool that needs one just can't execute until it's
+# configured - registry.LoadFromYAML still loads cleanly without them). See
+# the "Real DB/AWS dynamic secrets" section of docs/REFERENCE.md to add either.

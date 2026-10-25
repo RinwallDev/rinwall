@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>RinWall admin</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 2rem; background: #0e1416; color: #e7ecea; }
+  h1 { font-size: 1.1rem; letter-spacing: .04em; text-transform: uppercase; color: #e0a057; }
+  h2 { font-size: 1rem; margin-top: 2rem; border-bottom: 1px solid #2c3639; padding-bottom: .3rem;
+       display: flex; align-items: center; justify-content: space-between; }
+  h2 .hint { font-size: .7rem; text-transform: none; letter-spacing: 0; color: #6f7b7c; font-weight: 400; }
+  input, button { font-family: inherit; font-size: .9rem; padding: .4rem .6rem; }
+  input[type=text] { width: 420px; background: #1a2225; color: #e7ecea; border: 1px solid #2c3639; }
+  button { background: #2c3639; color: #e7ecea; border: 1px solid #3a4448; cursor: pointer; }
+  button:hover { background: #3a4448; }
+  table { border-collapse: collapse; width: 100%; margin-top: .5rem; table-layout: fixed; }
+  th, td { text-align: left; padding: .35rem .6rem; border-bottom: 1px solid #2c3639; font-size: .85rem;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  th { color: #a7b3b4; font-weight: 600; text-transform: uppercase; font-size: .7rem; letter-spacing: .04em; }
+  .mono { font-family: ui-monospace, monospace; font-size: .8rem; color: #a7b3b4; }
+  .empty { color: #a7b3b4; font-style: italic; padding: .5rem 0; }
+  .approve { background: #2f6e62; }
+  .deny { background: #a63a2e; }
+  .error-msg { color: #d98c73; font-size: .85rem; padding: .4rem 0; }
+
+  /* --- summary strip --- */
+  .stats { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .6rem; }
+  .stat { background: #161d1f; border: 1px solid #2c3639; border-radius: 6px; padding: .5rem .8rem; min-width: 92px; }
+  .stat .n { font-size: 1.3rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .stat .l { font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: #a7b3b4; }
+  .classbar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin-top: .5rem; width: 100%; max-width: 480px; }
+  .classbar div { height: 100%; }
+  .classlegend { display: flex; gap: 1rem; margin-top: .35rem; font-size: .72rem; color: #a7b3b4; }
+  .classlegend span.dot { display: inline-block; width: .6rem; height: .6rem; border-radius: 2px; margin-right: .3rem; }
+
+  /* --- activity feed --- */
+  .badge { display: inline-block; padding: .12rem .5rem; border-radius: 3px; font-size: .72rem;
+           font-weight: 600; letter-spacing: .02em; white-space: nowrap; }
+  .b-ok      { background: #1e3a30; color: #6fcf97; }
+  .b-deny    { background: #3a1e1e; color: #e08a76; }
+  .b-pending { background: #3a3320; color: #e0c057; }
+  .b-comp    { background: #1e3038; color: #6fb8cf; }
+  .b-fail    { background: #3a1e1e; color: #e08a76; }
+  .b-judge   { background: #2c1e3a; color: #b78ae0; }
+  .b-info    { background: #232b2c; color: #a7b3b4; }
+  .class-A   { color: #6fb8cf; } .class-B { color: #6fcf97; } .class-C { color: #e08a76; }
+  tr.activity-row { cursor: pointer; }
+  tr.activity-row:hover { background: #161d1f; }
+  tr.activity-detail td { white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: .75rem;
+                            color: #a7b3b4; background: #101617; }
+  .reason-cell { max-width: 0; }
+  .live-dot { display: inline-block; width: .5rem; height: .5rem; border-radius: 50%; background: #6fcf97;
+              margin-right: .4rem; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+</style>
+</head>
+<body>
+  <h1>RinWall - reviewer console (dev)</h1>
+  <div>
+    <label class="mono">Bearer token (from cmd/devtoken):</label><br>
+    <input type="text" id="token" placeholder="paste a JWT minted by cmd/devtoken">
+    <button onclick="loadAll()">Load</button>
+  </div>
+
+  <h2>Overview <span class="hint" id="overview-hint">requires role admin</span></h2>
+  <div id="overview-error" class="error-msg" style="display:none"></div>
+  <div id="stats" class="stats"></div>
+  <div id="classbar-wrap"></div>
+
+  <h2><span><span class="live-dot"></span>Live Activity</span>
+    <span class="hint">every call, judged, executed, gated, or reversed - newest first, click a row for the raw entry</span>
+  </h2>
+  <div id="activity-error" class="error-msg" style="display:none"></div>
+  <table id="activity">
+    <thead><tr><th style="width:80px">time</th><th style="width:110px">decision</th><th style="width:160px">tool</th>
+      <th style="width:50px">class</th><th style="width:110px">role</th><th>reason</th></tr></thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>Pending Approvals (tier 3)</h2>
+  <table id="approvals"><thead><tr><th>id</th><th>tool</th><th>args</th><th>requested_by</th><th>reviewer_role</th><th>status</th><th>action</th></tr></thead><tbody></tbody></table>
+
+  <h2>Pending Holds (tier 2)</h2>
+  <table id="holds"><thead><tr><th>id</th><th>tool</th><th>args</th><th>requested_by</th><th>fire_at</th><th>state</th><th>action</th></tr></thead><tbody></tbody></table>
+
+  <h2>Pre-Authorized Envelopes (tier 1)</h2>
+  <table id="envelopes"><thead><tr><th>id</th><th>tool</th><th>constraints</th><th>uses_remaining</th><th>expires_at</th></tr></thead><tbody></tbody></table>
+
+<script>
+let pollHandle = null;
+
+// Every value rendered below came through the proxy from an agent, and an
+// agent's arguments are attacker-influenced by definition (that is the
+// whole confused-deputy premise). Nothing agent-supplied touches innerHTML
+// unescaped - this console runs in the browser of the person approving
+// irreversible actions.
+function esc(v) {
+  return String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function tok() { return document.getElementById('token').value.trim(); }
+function authFetch(path, opts) {
+  opts = opts || {};
+  opts.headers = Object.assign({'Authorization': 'Bearer ' + tok()}, opts.headers || {});
+  return fetch(path, opts).then(r => {
+    if (!r.ok) return r.text().then(t => { throw new Error(r.status + ': ' + t); });
+    return r.json();
+  });
+}
+
+function loadAll() {
+  loadApprovals();
+  loadHolds();
+  loadEnvelopes();
+  loadOverview();
+  loadActivity();
+  if (pollHandle) clearInterval(pollHandle);
+  pollHandle = setInterval(() => { loadActivity(); loadOverview(); }, 4000);
+}
+
+// --- overview: GET /compliance/report, real aggregate numbers, refreshed alongside the feed ---
+const CLASS_COLOR = {A: '#6fb8cf', B: '#6fcf97', C: '#e08a76'};
+
+function loadOverview() {
+  authFetch('/compliance/report').then(r => {
+    document.getElementById('overview-error').style.display = 'none';
+    const d = r.by_decision || {};
+    const executed = (d.EXECUTED||0) + (d.ALLOW||0);
+    const stats = [
+      ['total events', r.total_events||0],
+      ['executed', executed],
+      ['denied', d.DENY||0],
+      ['pending human', d.PENDING||0],
+      ['auto-reversed', r.saga_compensations_succeeded||0],
+      ['judge calls', r.provenance_judge_invocations||0],
+    ];
+    document.getElementById('stats').innerHTML = stats.map(([l,n]) =>
+      `<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+
+    const byClass = r.by_reversibility_class || {};
+    const total = Object.values(byClass).reduce((a,b)=>a+b, 0) || 1;
+    const order = ['A','B','C'];
+    const bar = order.filter(k => byClass[k]).map(k =>
+      `<div style="width:${(byClass[k]/total*100).toFixed(1)}%;background:${CLASS_COLOR[k]}"></div>`).join('');
+    const legend = order.filter(k => byClass[k]).map(k =>
+      `<span><span class="dot" style="background:${CLASS_COLOR[k]}"></span>class ${k}: ${byClass[k]}</span>`).join('');
+    document.getElementById('classbar-wrap').innerHTML = total > 1
+      ? `<div class="classbar">${bar}</div><div class="classlegend">${legend}</div>`
+      : '';
+  }).catch(e => {
+    document.getElementById('stats').innerHTML = '';
+    document.getElementById('classbar-wrap').innerHTML = '';
+    const el = document.getElementById('overview-error');
+    el.textContent = String(e);
+    el.style.display = 'block';
+  });
+}
+
+// --- live activity: GET /admin/activity ---
+function badgeClass(decision) {
+  if (decision === 'EXECUTED' || decision === 'ALLOW') return 'b-ok';
+  if (decision === 'DENY') return 'b-deny';
+  if (decision === 'PENDING' || decision === 'HOLD' || decision === 'ENVELOPE_CREATED') return 'b-pending';
+  if (decision === 'COMPENSATED') return 'b-comp';
+  if (decision === 'COMPENSATION_FAILED') return 'b-fail';
+  if (decision === 'PROVENANCE_JUDGED' || decision === 'VISUAL_PROVENANCE_JUDGED') return 'b-judge';
+  if (decision === 'PROVENANCE_JUDGE_ERROR' || decision === 'VISUAL_PROVENANCE_JUDGE_ERROR') return 'b-fail';
+  return 'b-info';
+}
+
+function fmtTime(ts) {
+  if (!ts) return '';
+  const d = new Date(ts);
+  if (isNaN(d)) return ts;
+  return d.toLocaleTimeString();
+}
+
+function loadActivity() {
+  authFetch('/admin/activity?limit=75').then(rows => {
+    document.getElementById('activity-error').style.display = 'none';
+    const tbody = document.querySelector('#activity tbody');
+    tbody.innerHTML = '';
+    if (!rows || !rows.length) { tbody.innerHTML = '<tr><td colspan=6 class="empty">no activity yet - make a call through the proxy</td></tr>'; return; }
+    rows.forEach((e, i) => {
+      const cls = e.reversibility_class || '';
+      const tr = document.createElement('tr');
+      tr.className = 'activity-row';
+      tr.innerHTML =
+        `<td class="mono">${esc(fmtTime(e.ts))}</td>` +
+        `<td><span class="badge ${badgeClass(e.decision)}">${esc(e.decision)}</span></td>` +
+        `<td>${esc(e.tool)}</td>` +
+        `<td class="class-${esc(cls)}">${esc(cls)}</td>` +
+        `<td>${esc(e.delegated_role)}</td>` +
+        `<td class="reason-cell" title="${esc(e.reason)}">${esc(e.reason)}</td>`;
+      const detail = document.createElement('tr');
+      detail.className = 'activity-detail';
+      detail.style.display = 'none';
+      const td = document.createElement('td');
+      td.colSpan = 6;
+      td.textContent = JSON.stringify(e, null, 2);
+      detail.appendChild(td);
+      tr.onclick = () => { detail.style.display = detail.style.display === 'none' ? 'table-row' : 'none'; };
+      tbody.appendChild(tr);
+      tbody.appendChild(detail);
+    });
+  }).catch(e => {
+    document.querySelector('#activity tbody').innerHTML = '';
+    const el = document.getElementById('activity-error');
+    el.textContent = String(e);
+    el.style.display = 'block';
+  });
+}
+
+// --- tier 1/2/3 queues (unchanged) ---
+function loadApprovals() {
+  authFetch('/approvals').then(rows => {
+    const tbody = document.querySelector('#approvals tbody');
+    tbody.innerHTML = '';
+    if (!rows || !rows.length) { tbody.innerHTML = '<tr><td colspan=7 class="empty">nothing pending</td></tr>'; return; }
+    rows.forEach(p => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td class="mono">${esc(p.ID)}</td><td>${esc(p.Tool)}</td><td class="mono">${esc(JSON.stringify(p.Args))}</td>` +
+        `<td>${esc(p.RequestedBy)}</td><td>${esc(p.ReviewerRole)}</td><td>${esc(p.Status)}</td><td></td>`;
+      const actionTd = tr.lastElementChild;
+      if (p.Status === 'pending') {
+        const a = document.createElement('button'); a.textContent = 'Approve'; a.className = 'approve';
+        a.onclick = () => authFetch(`/approvals/${p.ID}/approve`, {method:'POST', body: JSON.stringify({hash: p.Hash})}).then(loadApprovals);
+        const d = document.createElement('button'); d.textContent = 'Deny'; d.className = 'deny';
+        d.onclick = () => authFetch(`/approvals/${p.ID}/deny`, {method:'POST'}).then(loadApprovals);
+        actionTd.appendChild(a); actionTd.appendChild(d);
+      }
+      tbody.appendChild(tr);
+    });
+  });
+}
+
+function loadHolds() {
+  authFetch('/holds').then(rows => {
+    const tbody = document.querySelector('#holds tbody');
+    tbody.innerHTML = '';
+    if (!rows || !rows.length) { tbody.innerHTML = '<tr><td colspan=6 class="empty">nothing queued</td></tr>'; return; }
+    rows.forEach(h => {
+      const state = h.Fired ? 'fired' : (h.Cancelled ? 'cancelled' : 'pending');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td class="mono">${esc(h.ID)}</td><td>${esc(h.Tool)}</td><td class="mono">${esc(JSON.stringify(h.Args))}</td>` +
+        `<td>${esc(h.RequestedBy)}</td><td>${esc(h.FireAt)}</td><td>${esc(state)}</td><td></td>`;
+      const actionTd = tr.lastElementChild;
+      if (state === 'pending') {
+        const c = document.createElement('button'); c.textContent = 'Cancel'; c.className = 'deny';
+        c.onclick = () => authFetch(`/holds/${h.ID}/cancel`, {method:'POST'}).then(loadHolds);
+        actionTd.appendChild(c);
+      }
+      tbody.appendChild(tr);
+    });
+  });
+}
+
+function loadEnvelopes() {
+  authFetch('/envelopes').then(rows => {
+    const tbody = document.querySelector('#envelopes tbody');
+    tbody.innerHTML = '';
+    if (!rows || !rows.length) { tbody.innerHTML = '<tr><td colspan=5 class="empty">none created</td></tr>'; return; }
+    rows.forEach(e => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td class="mono">${esc(e.ID)}</td><td>${esc(e.Tool)}</td><td class="mono">${esc(JSON.stringify(e.ArgConstraints))}</td>` +
+        `<td>${esc(e.UsesRemaining)}/${esc(e.MaxUses)}</td><td>${esc(e.ExpiresAt)}</td>`;
+      tbody.appendChild(tr);
+    });
+  });
+}
+</script>
+</body>
+</html>

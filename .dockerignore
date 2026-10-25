@@ -1,0 +1,10 @@
+# Keeps the build context small and stops a locally-running proxy's
+# scratch state from ever ending up baked into an image layer.
+.git
+.claude
+*.log
+*.db
+*.exe
+scratch_*
+__pycache__
+poc

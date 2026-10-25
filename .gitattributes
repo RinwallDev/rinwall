@@ -1,0 +1,15 @@
+# Found live: a fresh clone on a machine with the common Git-for-Windows
+# default (core.autocrlf=true, global) checked scripts/vault-init.sh out
+# with CRLF line endings, and the shell inside the Linux container it gets
+# bind-mounted into ("sh /vault-init.sh" - see docker-compose.yml) choked
+# on the \r immediately: "illegal option -". The blob in the repo was
+# always clean LF; this is purely a checkout-time conversion, and it broke
+# the entire stack for anyone whose global git config does this - which is
+# a lot of Windows developers, not an edge case.
+#
+# Force LF unconditionally for anything that runs as a script inside a
+# container, regardless of the cloning machine's own autocrlf setting.
+# Broadened to all text files rather than just *.sh - a Dockerfile or
+# docker-compose.yml misbehaving under the same corruption is the same
+# bug waiting to happen, just not yet triggered.
+* text=auto eol=lf
