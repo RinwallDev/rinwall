@@ -11,6 +11,10 @@ asks one question: **can this be undone?**
 - **Actions that can't be undone** (sending, paying, deleting, publishing) wait until a
   person approves that exact request.
 
+You don't have to label anything. RinWall reads your server's tool list and classifies each
+tool itself, and treats any tool it can't classify as irreversible. We measured how often it
+gets this right across 800 public MCP servers: [the write-up](research/2026-10-public-mcp-scan.md).
+
 The agent never holds your credentials, and every decision is written to a tamper-evident
 audit log.
 
